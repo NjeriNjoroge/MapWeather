@@ -10,9 +10,12 @@ import UIKit
 
 class ViewController: UIViewController {
 
+  private let viewModel = CurrentWeatherViewModel()
+
   override func viewDidLoad() {
     super.viewDidLoad()
-    // Do any additional setup after loading the view.
+    view.backgroundColor = .lightText
+
   }
 
 
