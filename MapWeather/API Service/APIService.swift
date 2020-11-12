@@ -20,8 +20,9 @@ struct API {
 
 class APIService {
 
+//Current weather API call
   func getWeatherFromCityName(city: String, completion: @escaping (CurrentWeather?) -> ()) {
-    if API.APIKey == ""{
+    if API.APIKey == "" {
       fatalError("use your own OpenWeather API key here")
     }
     guard let weatherRequestURL = URL(string: "\(API.openWeatherBaseURL)?appid=\(API.APIKey)&q=\(city)") else {
@@ -36,7 +37,6 @@ class APIService {
         completion(nil)
       }
 
-      //if let data = data {
         do {
           let weatherData = try JSONDecoder().decode(CurrentWeather.self, from: data!)
           completion(weatherData)
@@ -44,15 +44,14 @@ class APIService {
           print("Error in catch \(error)")
           completion(nil)
         }
-
-      //}
-
     }
     dataTask.resume()
   }
 
+
+//Forecast API call
   func getWeatherForecastFromCityName(city: String, completion: @escaping (WeatherForecast?) -> ()) {
-    if API.APIKey == ""{
+    if API.APIKey == "" {
       fatalError("use your own OpenWeather API key here")
     }
     guard let weatherRequestURL = URL(string: "\(API.openWeatherForecastBaseURL)?appid=\(API.APIKey)&q=\(city)") else {
@@ -66,8 +65,6 @@ class APIService {
         print("error 1")
         completion(nil)
       }
-
-      //if let data = data {
         do {
           let weatherForecastData = try JSONDecoder().decode(WeatherForecast.self, from: data!)
           completion(weatherForecastData)
@@ -75,9 +72,6 @@ class APIService {
           print("Error in catch \(error)")
           completion(nil)
         }
-
-      //}
-
     }
     dataTask.resume()
   }
