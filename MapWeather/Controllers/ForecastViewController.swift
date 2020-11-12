@@ -10,11 +10,9 @@ import UIKit
 
 class ForecastViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-      self.tabBarController?.title = "Forecast"
-
-        // Do any additional setup after loading the view.
-    }
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    self.tabBarController?.title = "Forecast"
+  }
 
 }
