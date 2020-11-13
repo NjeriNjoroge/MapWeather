@@ -6,10 +6,6 @@
 //  Copyright © 2020 Grace. All rights reserved.
 //
 
-//let weatherForecastURL = "https://api.openweathermap.org/data/2.5/forecast"
-//let weatherURL = "https://api.openweathermap.org/data/2.5/weather"
-//case appid = "0fd65ae8051cec4f21c386659c25955b"
-
 import Foundation
 
 struct API {

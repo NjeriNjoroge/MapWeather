@@ -14,17 +14,21 @@ class CurrentWeatherViewController: UIViewController {
 
   override func loadView() {
     super.loadView()
+    setupView()
+  }
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+  }
+
+  fileprivate func setupView() {
+    self.tabBarController?.title = "Today"
     weatherView.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(weatherView)
     NSLayoutConstraint.activate([
       weatherView.topAnchor.constraint(equalTo: view.topAnchor, constant: 70),
       weatherView.widthAnchor.constraint(equalTo: view.widthAnchor)
     ])
-  }
-
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    self.tabBarController?.title = "Today"
   }
 
 }
