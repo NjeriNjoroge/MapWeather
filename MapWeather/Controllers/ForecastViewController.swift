@@ -10,29 +10,33 @@ import UIKit
 
 class ForecastViewController: UICollectionViewController {
 
-//  let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout.init()
-//
-//  lazy var collectionView: UICollectionView = {
-//    let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout.init())
-//    collectionView.translatesAutoresizingMaskIntoConstraints = false
-//    collectionView.backgroundColor = .white
-
-//    return collectionView
-//  }()
+  let viewModel = CurrentWeatherViewModel()
+  var foreCast = [WeatherForecast]()
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    //view.backgroundColor = .white
     self.tabBarController?.title = "Forecast"
-//    collectionView.delegate = self
-//    collectionView.dataSource = self
     collectionView.backgroundColor = .white
-   collectionView.register(ForecastCollectionViewCell.self, forCellWithReuseIdentifier: ForecastCollectionViewCell.reuseIdentifier)
+    collectionView.register(ForecastCollectionViewCell.self, forCellWithReuseIdentifier: ForecastCollectionViewCell.reuseIdentifier)
   }
 
   override func loadView() {
     super.loadView()
     setupCollectionView()
+  }
+
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    fetchForecast()
+  }
+
+  func fetchForecast() {
+    viewModel.fetchWeatherForecast(cityName: "Nairobi") { (forecast) in
+      DispatchQueue.main.async {
+        self.collectionView.reloadData()
+      }
+    }
+    
   }
 
   func setupCollectionView() {
@@ -48,10 +52,15 @@ class ForecastViewController: UICollectionViewController {
 }
 extension ForecastViewController {
   override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return 5
+
+    return viewModel.count
   }
   override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ForecastCollectionViewCell.reuseIdentifier, for: indexPath) as! ForecastCollectionViewCell
+    cell.humidityLabel.text = "\(viewModel.forecast[indexPath.row].humidity)%"
+    cell.temperatureLabel.text = "\(viewModel.forecast[indexPath.row].temp)ºC"
+    cell.rainChanceLabel.text = "\(viewModel.forecast[indexPath.row].rain)mm"
+   cell.windSpeedLabel.text = "\(viewModel.forecast[indexPath.row].wind)m/s"
     return cell
   }
 

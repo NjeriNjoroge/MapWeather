@@ -99,6 +99,7 @@
 		87573BFB255BDFB100965529 /* MapWeather */ = {
 			isa = PBXGroup;
 			children = (
+				875D90C9255EE0FA000C41DB /* Resources */,
 				875D90BA255D6A02000C41DB /* Views */,
 				87573C22255BE06C00965529 /* Models */,
 				87573C21255BE06100965529 /* ViewModels */,
@@ -167,6 +168,13 @@
 				875D90C1255D9247000C41DB /* ForecastCollectionViewCell.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		875D90C9255EE0FA000C41DB /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

@@ -13,6 +13,12 @@ class ForecastCollectionViewCell: UICollectionViewCell {
   static let reuseIdentifier = "cell"
   static var defaultSize = CGSize(width: UIScreen.main.bounds.width, height: 80)
 
+//  var forecast: WeatherForecast? {
+//    didSet {
+//      update()
+//    }
+//  }
+
   lazy var dayLabel: UILabel = {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
@@ -146,8 +152,14 @@ class ForecastCollectionViewCell: UICollectionViewCell {
       detailsContainerView.leadingAnchor.constraint(equalTo: leadingAnchor)
     ])
 
-
   }
+
+//  func update() {
+//    humidityLabel.text = "\(forecast.humidity)%"
+//    temperatureLabel.text = "\(forecast.temp)ºC"
+//    rainChanceLabel.text = "\(forecast.rain)mm"
+//    windSpeedLabel.text = "\(forecast.wind)m/s"
+//  }
 
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")

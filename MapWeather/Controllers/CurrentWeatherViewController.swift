@@ -42,10 +42,11 @@ class CurrentWeatherViewController: UIViewController {
     viewModel.fetchCurrentWeather(cityName: "Nairobi") { (weather) in
       //update ui
       DispatchQueue.main.async {
-        self.weatherView.humidityLabel.text = "\(weather.humidity)"
-        self.weatherView.temperatureLabel.text = "\(weather.temp)"
-        self.weatherView.rainChanceLabel.text = "\(weather.rain)"
-        self.weatherView.windSpeedLabel.text = "\(weather.wind)"
+        self.weatherView.humidityLabel.text = "\(weather.humidity)%"
+        self.weatherView.temperatureLabel.text = "\(weather.temp)ºC"
+        self.weatherView.rainChanceLabel.text = "\(weather.rain)mm"
+        self.weatherView.windSpeedLabel.text = "\(weather.wind)m/s"
+        self.weatherView.curentLocationImage.image = UIImage(named: weather.icon)
       }
     }
   }
