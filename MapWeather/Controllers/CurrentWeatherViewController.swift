@@ -11,6 +11,7 @@ import UIKit
 class CurrentWeatherViewController: UIViewController {
 
   let weatherView = CurrentView()
+  let viewModel = CurrentWeatherViewModel()
 
   override func loadView() {
     super.loadView()
@@ -38,10 +39,15 @@ class CurrentWeatherViewController: UIViewController {
 
   fileprivate func fetchWeather() {
     //fetch weather
-    
-
-    //update ui
-
+    viewModel.fetchCurrentWeather(cityName: "Nairobi") { (weather) in
+      //update ui
+      DispatchQueue.main.async {
+        self.weatherView.humidityLabel.text = "\(weather.humidity)"
+        self.weatherView.temperatureLabel.text = "\(weather.temp)"
+        self.weatherView.rainChanceLabel.text = "\(weather.rain)"
+        self.weatherView.windSpeedLabel.text = "\(weather.wind)"
+      }
+    }
   }
 
 }

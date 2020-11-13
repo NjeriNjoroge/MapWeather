@@ -8,6 +8,15 @@
 
 import Foundation
 
+struct TodayWeather: Codable {
+  let temp: Double
+  let icon: String
+  let wind: Double
+  let rain: Double
+  let humidity: Int
+}
+
+// MARK: - Weather
 struct CurrentWeather: Codable {
     let coord: Coord
     let weather: [WeatherElement]
@@ -21,6 +30,7 @@ struct CurrentWeather: Codable {
     let timezone, id: Int
     let name: String
     let cod: Int
+  let rain: Rain?
 }
 
 // MARK: - Clouds
@@ -70,4 +80,14 @@ struct WeatherElement: Codable {
 struct Wind: Codable {
     let speed: Double
     let deg: Int
+}
+
+// MARK: - Rain
+struct Rain: Codable {
+    let threeHour: Double?
+    let oneHour: Double?
+  enum CodingKeys: String, CodingKey {
+    case threeHour = "3h"
+    case oneHour = "1h"
+  }
 }

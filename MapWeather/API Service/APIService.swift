@@ -17,12 +17,12 @@ struct API {
 class APIService {
 
 //Current weather API call
-  func getWeatherFromCityName(city: String, completion: @escaping (CurrentWeather?) -> ()) {
+  func getWeatherFromCityName(city: String, completion: @escaping (CurrentWeather) -> ()) {
     if API.APIKey == "" {
       fatalError("use your own OpenWeather API key here")
     }
     guard let weatherRequestURL = URL(string: "\(API.openWeatherBaseURL)?appid=\(API.APIKey)&q=\(city)") else {
-      completion(nil)
+      //completion(nil)
       return
     }
 
@@ -30,7 +30,7 @@ class APIService {
     let dataTask = URLSession.shared.dataTask(with: weatherRequestURL) { (data, response, error) in
       if error != nil {
         print("error 1")
-        completion(nil)
+        //completion(nil)
       }
 
         do {
@@ -38,7 +38,7 @@ class APIService {
           completion(weatherData)
         } catch {
           print("Error in catch \(error)")
-          completion(nil)
+          //completion(nil)
         }
     }
     dataTask.resume()
