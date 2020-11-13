@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CityScreenController: UITabBarController {
+class CityScreenTabController: UITabBarController {
 
   override func viewDidLoad() {
     super.viewDidLoad()

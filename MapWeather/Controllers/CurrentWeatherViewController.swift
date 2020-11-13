@@ -17,6 +17,11 @@ class CurrentWeatherViewController: UIViewController {
     setupView()
   }
 
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    fetchWeather()
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
   }
@@ -29,6 +34,14 @@ class CurrentWeatherViewController: UIViewController {
       weatherView.topAnchor.constraint(equalTo: view.topAnchor, constant: 70),
       weatherView.widthAnchor.constraint(equalTo: view.widthAnchor)
     ])
+  }
+
+  fileprivate func fetchWeather() {
+    //fetch weather
+    
+
+    //update ui
+
   }
 
 }

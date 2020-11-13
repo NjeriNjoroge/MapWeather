@@ -14,7 +14,7 @@ class CurrentWeatherViewModel {
 
   func fetchCurrentWeather(cityName: String, completion: ((_ weather: CurrentWeather) -> Void)?) {
     apiService.getWeatherFromCityName(city: cityName) { (json) in
-      print(json)
+      print("view model \(json)")
     }
   }
 
