@@ -13,15 +13,10 @@ class ForecastCollectionViewCell: UICollectionViewCell {
   static let reuseIdentifier = "cell"
   static var defaultSize = CGSize(width: UIScreen.main.bounds.width, height: 80)
 
-//  var forecast: WeatherForecast? {
-//    didSet {
-//      update()
-//    }
-//  }
-
   lazy var dayLabel: UILabel = {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
+    label.textColor = .systemTeal
     label.text = "Monday"
     return label
   }()
@@ -126,30 +121,37 @@ class ForecastCollectionViewCell: UICollectionViewCell {
   }
 
   func setupViews() {
+    addSubview(dayLabel)
     addSubview(imageContainerView)
     addSubview(detailsContainerView)
-    detailsContainerView.addSubview(detailStackView)
     imageContainerView.addSubview(imageStackView)
+    detailsContainerView.addSubview(detailStackView)
+    NSLayoutConstraint.activate([
+      dayLabel.topAnchor.constraint(equalTo: topAnchor, constant: 10),
+      dayLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10)
+    ])
     NSLayoutConstraint.activate([
        imageStackView.heightAnchor.constraint(equalToConstant: 30),
-       imageStackView.topAnchor.constraint(equalTo: topAnchor),
+       imageStackView.topAnchor.constraint(equalTo: imageContainerView.topAnchor),
        imageStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
        imageStackView.leadingAnchor.constraint(equalTo: leadingAnchor)
      ])
      NSLayoutConstraint.activate([
-       imageContainerView.topAnchor.constraint(equalTo: topAnchor),
+      imageContainerView.topAnchor.constraint(equalTo: dayLabel.bottomAnchor, constant: 5),
        imageContainerView.trailingAnchor.constraint(equalTo: trailingAnchor),
        imageContainerView.leadingAnchor.constraint(equalTo: leadingAnchor)
      ])
     NSLayoutConstraint.activate([
       detailStackView.topAnchor.constraint(equalTo: detailsContainerView.topAnchor),
       detailStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
-      detailStackView.leadingAnchor.constraint(equalTo: leadingAnchor)
+      detailStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
+      detailStackView.bottomAnchor.constraint(equalTo: detailsContainerView.bottomAnchor)
     ])
     NSLayoutConstraint.activate([
       detailsContainerView.topAnchor.constraint(equalTo: imageContainerView.bottomAnchor, constant: 30),
       detailsContainerView.trailingAnchor.constraint(equalTo: trailingAnchor),
-      detailsContainerView.leadingAnchor.constraint(equalTo: leadingAnchor)
+      detailsContainerView.leadingAnchor.constraint(equalTo: leadingAnchor),
+      detailsContainerView.bottomAnchor.constraint(equalTo: bottomAnchor)
     ])
 
   }

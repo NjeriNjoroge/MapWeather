@@ -63,7 +63,7 @@ cell.textLabel?.text = cityName
 
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     let _ = twoDimensionalArray[indexPath.section][indexPath.row]
-    let newVC = CityScreenTabController()
+    let newVC = CurrentWeatherViewController()
     navigationController?.pushViewController(newVC, animated: true)
 
   }

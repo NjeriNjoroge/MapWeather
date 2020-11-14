@@ -107,6 +107,13 @@ class CurrentView: UIView {
     return stackView
   }()
 
+  lazy var firstContainerView: UIView = {
+    let view = UIView()
+    //view.backgroundColor = UIColor(hexString: "#47ab2f")
+    view.translatesAutoresizingMaskIntoConstraints = false
+    return view
+  }()
+
   override init(frame: CGRect) {
     super.init(frame: frame)
     setupView()

@@ -14,6 +14,7 @@ struct WeatherForecast {
   let wind: Double
   let rain: Double
   let humidity: Int
+  let forecastDate: String
 }
 
 // MARK: - Weather

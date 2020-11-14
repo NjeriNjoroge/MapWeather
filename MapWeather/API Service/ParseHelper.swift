@@ -34,30 +34,53 @@ public class ParseHelper {
     return weatherObject
   }
 
+  static func convertUtcToLocalTime (date :String) -> String {
+
+    let dateFormatterGet = DateFormatter()
+    dateFormatterGet.dateFormat = "yyyy-MM-dd HH:mm:ss"
+
+    let dateFormatterPrint = DateFormatter()
+    dateFormatterPrint.dateFormat = "cccc"
+
+    let localeDate = dateFormatterGet.date(from: date)
+    return dateFormatterPrint.string(from: localeDate!)
+  }
+
   //forecast weather
   static func parseForecast(json: Weather) -> [WeatherForecast] {
 
     var weather = [WeatherForecast]()
 
-    for all in json.list {
-      let rain = all.rain?.the3H ?? 0.00
-      let wind = all.wind.speed
-      let weatherIcon = all.weather[0].icon
-      let humid = all.main.humidity
-      let temp = all.main.temp
-      let forecastObj = WeatherForecast(temp: temp, icon: weatherIcon, wind: wind, rain: rain, humidity: humid)
-       weather.append(forecastObj)
+//    for all in json.list {
+//      let rain = all.rain?.the3H ?? 0.00
+//      let wind = all.wind.speed
+//      let weatherIcon = all.weather[0].icon
+//      let humid = all.main.humidity
+//      let temp = all.main.temp
+//      let date = all.dtTxt
+//      let theDate = self.convertUtcToLocalTime(date: date)
+//      let forecastObj = WeatherForecast(temp: temp, icon: weatherIcon, wind: wind, rain: rain, humidity: humid, forecastDate: theDate)
+//      if weather.contains( where: { $0.forecastDate == forecastObj.forecastDate } ) == false {
+//         weather.append(forecastObj)
+//      }
+//       weather.append(forecastObj)
+//    }
+
+    json.list.forEach { (forecast) in
+      let rain = forecast.rain?.the3H ?? 0.00
+      let wind = forecast.wind.speed
+      let weatherIcon = forecast.weather[0].icon
+      let humid = forecast.main.humidity
+      let temp = forecast.main.temp
+      let date = forecast.dtTxt
+      let theDate = self.convertUtcToLocalTime(date: date)
+      let forecastObj = WeatherForecast(temp: temp, icon: weatherIcon, wind: wind, rain: rain, humidity: humid, forecastDate: theDate)
+      if weather.contains( where: { $0.forecastDate == forecastObj.forecastDate } ) == false {
+        weather.append(forecastObj)
+      }
     }
 
-//    json.list.forEach { (forecast) in
-//      let rain = forecast.rain?.the3H ?? 0.00
-//      let wind = forecast.wind.speed
-//      let weatherIcon = forecast.weather[0].icon
-//      let humid = forecast.main.humidity
-//      let temp = forecast.main.temp
-//      let forecastObj = WeatherForecast(temp: temp, icon: weatherIcon, wind: wind, rain: rain, humidity: humid)
-//      weather.append(forecastObj)
-//    }
+
 
 //    let wind = json.list[0].wind.speed
 //    let rain = json.list[0].rain?.the3H ?? 0.00

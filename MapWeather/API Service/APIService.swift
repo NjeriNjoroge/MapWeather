@@ -37,7 +37,7 @@ class APIService {
           let weatherData = try JSONDecoder().decode(CurrentWeather.self, from: data!)
           completion(weatherData)
         } catch {
-          print("Error in catch \(error)")
+          print("Error in catch \(error)") //handle this error
           //completion(nil)
         }
     }
