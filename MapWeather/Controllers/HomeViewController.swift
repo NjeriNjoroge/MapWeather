@@ -29,6 +29,11 @@ class HomeViewController: UIViewController {
     super.loadView()
     setupMap()
     navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(openBookmarks))
+
+    let helpBtn = UIBarButtonItem(image: UIImage(named: "help"), style: .plain, target: self, action: #selector(openHelpScreen))
+    let settingBtn = UIBarButtonItem(image: UIImage(named: "settings"), style: .plain, target: self, action: #selector(openSettingScreen))
+
+    navigationItem.setLeftBarButtonItems([helpBtn, settingBtn], animated: true)
   }
 
   fileprivate func setupMap() {
@@ -44,7 +49,16 @@ class HomeViewController: UIViewController {
   @objc fileprivate func openBookmarks() {
     let newVC = BookmarksTableViewController()
     navigationController?.pushViewController(newVC, animated: true)
+  }
 
+  @objc fileprivate func openHelpScreen() {
+    let newVC = HelpViewController()
+    navigationController?.pushViewController(newVC, animated: true)
+  }
+
+  @objc fileprivate func openSettingScreen() {
+    let newVC = SettingsViewController()
+    navigationController?.pushViewController(newVC, animated: true)
   }
 
 }
