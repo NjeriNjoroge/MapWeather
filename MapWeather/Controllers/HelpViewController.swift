@@ -46,6 +46,7 @@ class HelpViewController: UIViewController, WKNavigationDelegate {
               <h2> How to use the map</h2>
                   <p>Pinch and zoom the map to scroll through it</p>
                   <p>To add a bookmark click a location on the map, click on the accessory button. Add a bookmark in order to view the weather of the location.</p>
+                  <p>Double click the bookmark name in order to view weather</p>
           </body>
       </html>
       """
