@@ -35,11 +35,12 @@ class APIService {
       }
 
         do {
-          let weatherData = try JSONDecoder().decode(CurrentWeather.self, from: data!)
+          guard let data = data else {return}
+          let weatherData = try JSONDecoder().decode(CurrentWeather.self, from: data)
           completion(weatherData)
         } catch {
-          print("Error in catch \(error)") //handle this error
-          //completion(nil)
+          WeatherApiError.jsonParsingFailure(message: "\(error)")
+          
         }
     }
     dataTask.resume()
@@ -65,7 +66,7 @@ class APIService {
           let weatherForecastData = try JSONDecoder().decode(Weather.self, from: data)
           completion(weatherForecastData)
         } catch {
-          print("Error in catch forecast \(error)")
+          WeatherApiError.jsonParsingFailure(message: "\(error)")
         }
     }
     dataTask.resume()

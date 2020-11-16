@@ -1,0 +1,31 @@
+
+{
+    "dt": 1471197600,
+    "main": {
+        "temp": 22.91,
+        "temp_min": 21.93,
+        "temp_max": 22.91,
+        "pressure": 1028.36,
+        "sea_level": 1038.26,
+        "grnd_level": 1028.36,
+        "humidity": 54,
+        "temp_kf": 0.98
+    },
+    "weather": [{
+                "id": 800,
+                "main": "Clear",
+                "description": "clear sky",
+                "icon": "01d"
+                }],
+    "clouds": {
+        "all": 0
+    },
+    "wind": {
+        "speed": 2.23,
+        "deg": 10.0005
+    },
+    "sys": {
+        "pod": "d"
+    },
+    "dt_txt": "2016-08-14 18:00:00"
+}

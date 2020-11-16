@@ -12,4 +12,16 @@ enum WeatherApiError: Error {
   case requestFailed
   case invalidData
   case jsonParsingFailure(message: String)
+
+  func handle(apiError error: WeatherApiError) {
+    switch error {
+    case .requestFailed:
+      print("\(error)")
+    case .invalidData:
+      print("\(error)")
+    case .jsonParsingFailure:
+      print("\(error)")
+
+    }
+  }
 }
