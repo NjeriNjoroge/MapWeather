@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MapKit
 
 struct API {
   static let APIKey = "0fd65ae8051cec4f21c386659c25955b"
@@ -17,11 +18,11 @@ struct API {
 class APIService {
 
 //Current weather API call
-  func getWeatherFromCityName(city: String, completion: @escaping (CurrentWeather) -> ()) {
+  func getWeatherFromCityName(coord: CLLocationCoordinate2D, completion: @escaping (CurrentWeather) -> ()) {
     if API.APIKey == "" {
       fatalError("use your own OpenWeather API key here")
     }
-    guard let weatherRequestURL = URL(string: "\(API.openWeatherBaseURL)?appid=\(API.APIKey)&q=\(city)&units=metric") else {
+    guard let weatherRequestURL = URL(string: "\(API.openWeatherBaseURL)?lat=\(coord.latitude)&lon=\(coord.longitude)&appid=\(API.APIKey)&units=metric") else {
       //completion(nil)
       return
     }
@@ -46,11 +47,11 @@ class APIService {
 
 
 //Forecast API call
-  func getWeatherForecastFromCityName(city: String, completion: @escaping (Weather) -> ()) {
+  func getWeatherForecastFromCityName(coord: CLLocationCoordinate2D, completion: @escaping (Weather) -> ()) {
     if API.APIKey == "" {
       fatalError("use your own OpenWeather API key here")
     }
-    guard let weatherRequestURL = URL(string: "\(API.openWeatherForecastBaseURL)?appid=\(API.APIKey)&q=\(city)&units=metric") else {
+    guard let weatherRequestURL = URL(string: "\(API.openWeatherForecastBaseURL)?lat=\(coord.latitude)&lon=\(coord.longitude)&appid=\(API.APIKey)&units=metric") else {
       return
     }
 
@@ -60,10 +61,11 @@ class APIService {
         print("error 1")
       }
         do {
-          let weatherForecastData = try JSONDecoder().decode(Weather.self, from: data!)
+          guard let data = data else {return}
+          let weatherForecastData = try JSONDecoder().decode(Weather.self, from: data)
           completion(weatherForecastData)
         } catch {
-          print("Error in catch \(error)")
+          print("Error in catch forecast \(error)")
         }
     }
     dataTask.resume()

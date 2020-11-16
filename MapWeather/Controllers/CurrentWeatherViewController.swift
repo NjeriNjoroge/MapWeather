@@ -7,11 +7,19 @@
 //
 
 import UIKit
+import MapKit
+
+protocol GetCityNameAndCoordinates: class {
+  func getDeets(cityname: String, coord: CLLocationCoordinate2D)
+}
 
 class CurrentWeatherViewController: UIViewController {
 
   let weatherView = CurrentView()
   let viewModel = CurrentWeatherViewModel()
+  var theCityNameText = ""
+  var cityCoordinates = CLLocationCoordinate2D()
+  var whositheDelegate: GetCityNameAndCoordinates?
 
   lazy var forecastLabel: UILabel = {
     let label = UILabel()
@@ -48,8 +56,8 @@ class CurrentWeatherViewController: UIViewController {
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    fetchWeather()
-    fetchForecast()
+    fetchWeather(theCityNameText)
+    fetchForecast(theCityNameText)
   }
 
   override func loadView() {
@@ -103,9 +111,9 @@ class CurrentWeatherViewController: UIViewController {
      ])
    }
 
-  fileprivate func fetchWeather() {
+  fileprivate func fetchWeather(_ cityName: String) {
     //fetch weather
-    viewModel.fetchCurrentWeather(cityName: "Nairobi") { (weather) in
+    viewModel.fetchCurrentWeather(coord: cityCoordinates) { (weather) in
       //update ui
       DispatchQueue.main.async {
         self.weatherView.humidityLabel.text = "\(weather.humidity)%"
@@ -117,8 +125,8 @@ class CurrentWeatherViewController: UIViewController {
     }
   }
 
-  func fetchForecast() {
-    viewModel.fetchWeatherForecast(cityName: "Nairobi") { (forecast) in
+  func fetchForecast(_ cityName: String) {
+    viewModel.fetchWeatherForecast(coord: cityCoordinates) { (forecast) in
       DispatchQueue.main.async {
         self.collectionView.reloadData()
       }
@@ -143,5 +151,14 @@ extension CurrentWeatherViewController: UICollectionViewDelegate, UICollectionVi
 
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     return CGSize(width: collectionView.bounds.width, height: 100)
+  }
+}
+
+extension CurrentWeatherViewController: GetCityNameAndCoordinates {
+  func getDeets(cityname: String, coord: CLLocationCoordinate2D) {
+    theCityNameText = cityname
+    fetchWeather(cityname)
+    fetchForecast(cityname)
+    weatherView.currentLocationLabel.text = cityname
   }
 }

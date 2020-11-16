@@ -11,6 +11,9 @@ import MapKit
 
 class HomeViewController: UIViewController {
 
+  let annotation = MKPointAnnotation()
+  let defaults = UserDefaults.standard
+
   lazy var mapView: MKMapView = {
     let map = MKMapView()
     //map.showsUserLocation = true //drop a pin at users current location
@@ -23,12 +26,12 @@ class HomeViewController: UIViewController {
     view.backgroundColor = .white
     self.title = "Home"
     mapView.delegate = self
+    setUpGesture()
   }
 
   override func loadView() {
     super.loadView()
     setupMap()
-    navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(openBookmarks))
 
     let helpBtn = UIBarButtonItem(image: UIImage(named: "help"), style: .plain, target: self, action: #selector(openHelpScreen))
     let settingBtn = UIBarButtonItem(image: UIImage(named: "settings"), style: .plain, target: self, action: #selector(openSettingScreen))
@@ -48,6 +51,7 @@ class HomeViewController: UIViewController {
 
   @objc fileprivate func openBookmarks() {
     let newVC = BookmarksTableViewController()
+   
     navigationController?.pushViewController(newVC, animated: true)
   }
 
@@ -61,8 +65,65 @@ class HomeViewController: UIViewController {
     navigationController?.pushViewController(newVC, animated: true)
   }
 
+  func setUpGesture() {
+    let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+    gestureRecognizer.delegate = self
+    mapView.addGestureRecognizer(gestureRecognizer)
+  }
+
 }
 
 extension HomeViewController: MKMapViewDelegate {
 
+
+  func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+    let reuseId = "pin"
+    var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) as? MKPinAnnotationView
+    if pinView == nil {
+        pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+        pinView?.canShowCallout = true
+
+        let rightButton: AnyObject! = UIButton(type: UIButton.ButtonType.detailDisclosure)
+        pinView?.rightCalloutAccessoryView = rightButton as? UIView
+    }
+    else {
+        pinView?.annotation = annotation
+    }
+
+    return pinView
+  }
+
+  func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+    let alert = UIAlertController(title: "Add bookmark", message: "", preferredStyle: .alert)
+    // 3. Grab the value from the text field, and save it when the user clicks OK.
+    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
+      self.openBookmarks()
+    }))
+    let latCoord = view.annotation?.coordinate.latitude
+    let longCoord = view.annotation?.coordinate.longitude
+    defaults.set(latCoord, forKey: "LatCoord")
+    defaults.set(longCoord, forKey: "LongCoord")
+    self.present(alert, animated: true, completion: nil)
+  }
+
+}
+
+//MARK: UIGesture Delegate
+extension HomeViewController: UIGestureRecognizerDelegate {
+
+  ///Gets the longitude and latitude of the position user tapped
+  @objc func handleTap(gestureRecognizer: UITapGestureRecognizer) {
+
+    let location = gestureRecognizer.location(in: mapView)
+    let coordinate = mapView.convert(location,toCoordinateFrom: mapView)
+
+    mapView.annotations.forEach {
+     mapView.removeAnnotation($0)
+    }
+
+    ///Add annotation:
+    annotation.coordinate = coordinate
+    annotation.title = "\(coordinate)"
+    mapView.addAnnotation(annotation)
+  }
 }

@@ -21,35 +21,35 @@ struct WeatherForecast {
 struct Weather: Codable {
     let cod: String
     let message, cnt: Int
-    let list: [ForecastList]
-    let city: ForecastCity
+    let list: [List]
+    let city: City
 }
 
 // MARK: - City
-struct ForecastCity: Codable {
+struct City: Codable {
     let id: Int
     let name: String
-    let coord: ForecastCoord
+    let coord: ForecastCoord?
     let country: String
     let population, timezone, sunrise, sunset: Int
 }
 
 // MARK: - Coord
 struct ForecastCoord: Codable {
-    let lat, lon: Double
+    let lat, lon: Double?
 }
 
 // MARK: - List
-struct ForecastList: Codable {
+struct List: Codable {
     let dt: Int
     let main: MainClass
-    let weather: [ForecastElement]
+    let weather: [ForecastWeatherElement]
     let clouds: ForecastClouds
     let wind: ForecastWind
     let visibility: Int
     let pop: Double
     let rain: ForecastRain?
-    let sys: ForecastSys
+    let sys: ForecastSys?
     let dtTxt: String
 
     enum CodingKeys: String, CodingKey {
@@ -84,16 +84,18 @@ struct MainClass: Codable {
 
 // MARK: - Rain
 struct ForecastRain: Codable {
-    let the3H: Double
+  let the3H: Double?
+  let the1h: Double?
 
     enum CodingKeys: String, CodingKey {
-        case the3H = "3h"
+      case the3H = "3h"
+      case the1h = "1h"
     }
 }
 
 // MARK: - Sys
 struct ForecastSys: Codable {
-    let pod: Pod
+    let pod: Pod?
 }
 
 enum Pod: String, Codable {
@@ -102,11 +104,11 @@ enum Pod: String, Codable {
 }
 
 // MARK: - WeatherElement
-struct ForecastElement: Codable {
-    let id: Int
-    let main: MainEnum
-    let weatherDescription: Description
-    let icon: String
+struct ForecastWeatherElement: Codable {
+    let id: Int?
+    let main: MainEnum?
+    let weatherDescription: Description?
+    let icon: String?
 
     enum CodingKeys: String, CodingKey {
         case id, main
@@ -128,10 +130,12 @@ enum Description: String, Codable {
     case lightRain = "light rain"
     case overcastClouds = "overcast clouds"
     case scatteredClouds = "scattered clouds"
+    case moderateRain = "moderate rain"
 }
 
 // MARK: - Wind
 struct ForecastWind: Codable {
-    let speed: Double
-    let deg: Int
+  let speed: Double
+  let deg: Int
+  let gust: Double?
 }

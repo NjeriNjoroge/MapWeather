@@ -22,7 +22,7 @@ public class ParseHelper {
     let humid = json.main.humidity
     let ttemp = json.main.temp
     let windSpeed = json.wind.speed
-    let rainChance = json.rain?.oneHour ?? 0.00
+    let rainChance = json.rain?.the1h ?? 0.00
     var weatherIcon = ""
     json.weather.forEach { (weather) in
       weatherIcon = weather.icon
@@ -48,6 +48,7 @@ public class ParseHelper {
 
   //forecast weather
   static func parseForecast(json: Weather) -> [WeatherForecast] {
+    
 
     var weather = [WeatherForecast]()
 
@@ -74,7 +75,8 @@ public class ParseHelper {
       let temp = forecast.main.temp
       let date = forecast.dtTxt
       let theDate = self.convertUtcToLocalTime(date: date)
-      let forecastObj = WeatherForecast(temp: temp, icon: weatherIcon, wind: wind, rain: rain, humidity: humid, forecastDate: theDate)
+      guard let ikon = weatherIcon else {return}
+      let forecastObj = WeatherForecast(temp: temp, icon: ikon, wind: wind, rain: rain, humidity: humid, forecastDate: theDate)
       if weather.contains( where: { $0.forecastDate == forecastObj.forecastDate } ) == false {
         weather.append(forecastObj)
       }

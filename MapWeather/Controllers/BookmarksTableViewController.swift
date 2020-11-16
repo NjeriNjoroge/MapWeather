@@ -8,110 +8,76 @@
 
 //user should be able to remove a bookmark
 import UIKit
+import MapKit
+
+
 
 class BookmarksTableViewController: UITableViewController {
 
   let cellId = "cell"
-
-  let sections = ["Popular", "Bookmarked"]
-  let popularCities = ["Berlin, Germany", "Paris, France", "Wanshington DC, United States", "Stockhom, Sweden", "London, England"]
-  let bookmarkedCities = [String]()
-  let twoDimensionalArray = [
-["Berlin, Germany", "Paris, France", "Wanshington DC, United States", "Stockhom, Sweden", "London, England"],
-    ["Nairobi, Kenya"]
-  ]
+  let defaults = UserDefaults.standard
+  var currentLocation:CLLocationCoordinate2D!
+  var alertText = ""
+  var bookmarkedCities = [String]()
+  weak var delegate: GetCityNameAndCoordinates?
 
   override func viewDidLoad() {
     super.viewDidLoad()
-
     tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellId)
+    setBookmarkName()
+  }
 
-    // Uncomment the following line to preserve selection between presentations
-    // self.clearsSelectionOnViewWillAppear = false
+  fileprivate func setBookmarkName() {
+    let alert = UIAlertController(title: "Optional bookmark name", message: "", preferredStyle: .alert)
+    alert.addTextField { (textField) in
+      textField.placeholder = "Bookmark name"
+    }
+    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
+      let textField = alert?.textFields![0]// Force unwrapping because we know it exists.
+      let city = textField?.text ?? ""
+      self.alertText = city
+    }))
 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    let savedCity = defaults.string(forKey: "citySaved") ?? ""
+    let latSaved = defaults.double(forKey: "LatCoord") ?? 0.0
+    let longSaved = defaults.double(forKey: "LongCoord") ?? 0.0
+    currentLocation = CLLocationCoordinate2D(latitude: latSaved, longitude: longSaved)
+
+    bookmarkedCities.append("\(currentLocation)")
+    self.present(alert, animated: true, completion: nil)
   }
 
   // MARK: - Table view data source
 
   override func numberOfSections(in tableView: UITableView) -> Int {
-    return twoDimensionalArray.count
+    return 1
   }
 
   override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    return sections[section]
-
+    return "Bookmarked"
   }
 
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return twoDimensionalArray[section].count
-
+    return bookmarkedCities.count
   }
 
 
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
     cell.selectionStyle = .none
+    let cityName = defaults.object(forKey: "SavedArray") as? [String] ?? [String]()
 
-//    let cityName = indexPath.section == 0 ? popularCities[indexPath.row] : bookmarkedCities[indexPath.row]
-//    cell.textLabel?.text = cityName
-    let cityName = twoDimensionalArray[indexPath.section][indexPath.row]
-cell.textLabel?.text = cityName
+    cell.textLabel?.text = alertText ?? bookmarkedCities[indexPath.row]
+    DispatchQueue.main.async {
+      self.tableView.reloadData()
+    }
     return cell
   }
 
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    let _ = twoDimensionalArray[indexPath.section][indexPath.row]
     let newVC = CurrentWeatherViewController()
+    newVC.getDeets(cityname: alertText, coord: currentLocation)
     navigationController?.pushViewController(newVC, animated: true)
-
   }
-
-
-  /*
-   // Override to support conditional editing of the table view.
-   override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-   // Return false if you do not want the specified item to be editable.
-   return true
-   }
-   */
-
-  /*
-   // Override to support editing the table view.
-   override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-   if editingStyle == .delete {
-   // Delete the row from the data source
-   tableView.deleteRows(at: [indexPath], with: .fade)
-   } else if editingStyle == .insert {
-   // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-   }
-   }
-   */
-
-  /*
-   // Override to support rearranging the table view.
-   override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-   }
-   */
-
-  /*
-   // Override to support conditional rearranging of the table view.
-   override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-   // Return false if you do not want the item to be re-orderable.
-   return true
-   }
-   */
-
-  /*
-   // MARK: - Navigation
-
-   // In a storyboard-based application, you will often want to do a little preparation before navigation
-   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-   // Get the new view controller using segue.destination.
-   // Pass the selected object to the new view controller.
-   }
-   */
 
 }

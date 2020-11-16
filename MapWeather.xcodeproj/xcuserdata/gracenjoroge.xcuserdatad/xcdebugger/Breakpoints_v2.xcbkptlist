@@ -3,4 +3,69 @@
    uuid = "CE04AE3B-F940-41E9-A697-AFB94B1DA610"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "DCF1BB84-730E-4CFF-91BF-4D1588128F2D"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MapWeather/Controllers/BookmarksTableViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "35"
+            endingLineNumber = "35"
+            landmarkName = "setBookmarkName()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "DCF1BB84-730E-4CFF-91BF-4D1588128F2D - 4f33ab3a21261b79"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MapWeather.BookmarksTableViewController.(setBookmarkName in _415F82975205492AD67E3D37E6732212)() -&gt; ()"
+                  moduleName = "MapWeather"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/gracenjoroge/Desktop/MapWeather/MapWeather/Controllers/BookmarksTableViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "35"
+                  endingLineNumber = "35"
+                  offsetFromSymbolStart = "423">
+               </Location>
+               <Location
+                  uuid = "DCF1BB84-730E-4CFF-91BF-4D1588128F2D - 4f33ab3a21261b79"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MapWeather.BookmarksTableViewController.(setBookmarkName in _415F82975205492AD67E3D37E6732212)() -&gt; ()"
+                  moduleName = "MapWeather"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/gracenjoroge/Desktop/MapWeather/MapWeather/Controllers/BookmarksTableViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "35"
+                  endingLineNumber = "35"
+                  offsetFromSymbolStart = "537">
+               </Location>
+               <Location
+                  uuid = "DCF1BB84-730E-4CFF-91BF-4D1588128F2D - 4d16841fe63b0227"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (__C.UIAlertAction) -&gt; () in MapWeather.BookmarksTableViewController.(setBookmarkName in _415F82975205492AD67E3D37E6732212)() -&gt; ()"
+                  moduleName = "MapWeather"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/gracenjoroge/Desktop/MapWeather/MapWeather/Controllers/BookmarksTableViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "35"
+                  endingLineNumber = "35"
+                  offsetFromSymbolStart = "147">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

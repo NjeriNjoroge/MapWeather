@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct TodayWeather: Codable {
+struct TodayWeather {
   let temp: Double
   let icon: String
   let wind: Double
@@ -26,11 +26,11 @@ struct CurrentWeather: Codable {
     let wind: Wind
     let clouds: Clouds
     let dt: Int
-    let sys: Sys
+    let sys: Sys?
     let timezone, id: Int
     let name: String
     let cod: Int
-  let rain: Rain?
+    let rain: Rain?
 }
 
 // MARK: - Clouds
@@ -41,6 +41,16 @@ struct Clouds: Codable {
 // MARK: - Coord
 struct Coord: Codable {
     let lon, lat: Double
+}
+
+struct Rain: Codable {
+  let the3H: Double?
+  let the1h: Double?
+
+    enum CodingKeys: String, CodingKey {
+      case the3H = "3h"
+      case the1h = "1h"
+    }
 }
 
 // MARK: - Main
@@ -59,9 +69,9 @@ struct Main: Codable {
 
 // MARK: - Sys
 struct Sys: Codable {
-    let type, id: Int
-    let country: String
-    let sunrise, sunset: Int
+    let type, id: Int?
+    let country: String?
+    let sunrise, sunset: Int?
 }
 
 // MARK: - WeatherElement
@@ -80,14 +90,5 @@ struct WeatherElement: Codable {
 struct Wind: Codable {
     let speed: Double
     let deg: Int
-}
-
-// MARK: - Rain
-struct Rain: Codable {
-    let threeHour: Double?
-    let oneHour: Double?
-  enum CodingKeys: String, CodingKey {
-    case threeHour = "3h"
-    case oneHour = "1h"
-  }
+    let gust: Double?
 }

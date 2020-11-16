@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import MapKit
 
 class CurrentWeatherViewModel {
 
@@ -15,16 +16,16 @@ class CurrentWeatherViewModel {
   var currentWeather = [TodayWeather]()
   var forecast = [WeatherForecast]()
 
-  func fetchCurrentWeather(cityName: String, completion: ((_ weather: TodayWeather) -> Void)?) {
-    apiService.getWeatherFromCityName(city: cityName) { (json) in
+  func fetchCurrentWeather(coord: CLLocationCoordinate2D, completion: ((_ weather: TodayWeather) -> Void)?) {
+    apiService.getWeatherFromCityName(coord: coord) { (json) in
       let results = ParseHelper.parseWeather(json: json)
       self.currentWeather.append(results)
       completion?(results)
     }
   }
 
-  func fetchWeatherForecast(cityName: String, completion: ((_ weather: [WeatherForecast]) -> Void)?) {
-    apiService.getWeatherForecastFromCityName(city: cityName) { (json) in
+  func fetchWeatherForecast(coord: CLLocationCoordinate2D, completion: ((_ weather: [WeatherForecast]) -> Void)?) {
+    apiService.getWeatherForecastFromCityName(coord: coord) { (json) in
       let results = ParseHelper.parseForecast(json: json)
       self.forecast.append(contentsOf: results)
       completion?(results)
